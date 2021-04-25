@@ -1,18 +1,47 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="home-wrapper">
+    <div class="home">
+      <CountryList @CountrySelected="selectCountry"></CountryList>
+    </div>
+    <h4>Selected Country: {{ queryParameter }}</h4>
+    <button>
+      <router-link :to="'/university-list/' + queryParameter">Search Universities</router-link>
+    </button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import CountryList from '@/components/CountryList.vue'
 export default {
-  name: 'Home',
+  data () {
+    return {
+      queryParameter: ''
+    }
+  },
   components: {
-    HelloWorld
+    CountryList
+  },
+  methods: {
+    selectCountry (selectedCountry) {
+      console.log('view:', selectedCountry)
+      this.queryParameter = selectedCountry
+    }
   }
 }
 </script>
+
+<style scoped>
+.home-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home {
+  max-width: 500px;
+  max-height: 500px;
+  display: block;
+  overflow-y: auto;
+}
+</style>
